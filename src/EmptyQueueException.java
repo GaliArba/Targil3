@@ -5,8 +5,7 @@
  * @author Yuval komar, Gali arba
  */
 public class EmptyQueueException extends QueueException {
-    public EmptyQueueException() {
-    }
+    public EmptyQueueException() { } //Default constructor
 
     public EmptyQueueException(String message) {
         super(message);

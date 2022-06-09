@@ -4,8 +4,7 @@
  * @author Yuval komar, Gali arba
  */
 public class QueueException extends RuntimeException{
-    public QueueException() {
-    }
+    public QueueException() { } // Default constructor
 
     public QueueException(String message) {
         super(message);

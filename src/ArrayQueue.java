@@ -6,17 +6,19 @@ import java.util.Iterator;
  * @author Yuval komar, Gali arba
  * @param <E> instance of the array queue object
  */
-public class ArrayQueue<E> implements  Queue{
+public class ArrayQueue implements Queue{
     private Object ArrayQueue[];
+    private int front, rear, capacity;
 
     /**
      * creates a new queue
-     * @param maxCap is the max capacity of the queue
+     * @param maxCap is the maximum capacity of the queue
      * @throws NegativeCapacityException
      */
-    public ArrayQueue(int maxCap) throws NegativeCapacityException{ //maxCap is the maximum capacity
+    public ArrayQueue(int maxCap) throws NegativeCapacityException { //maxCap is the maximum capacity
         if (maxCap < 0)
-            
+            throw new NegativeCapacityException();
+        ArrayQueue = new Object[maxCap]; //Initialize Array
     }
 
     @Override

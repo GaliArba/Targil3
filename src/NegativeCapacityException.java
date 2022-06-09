@@ -5,15 +5,14 @@
  * @author Yuval komar, Gali arba
  */
 public class NegativeCapacityException extends QueueException {
-        public NegativeCapacityException() {
-        }
+    public NegativeCapacityException() { } //Default constructor
 
-        public NegativeCapacityException(String message) {
-            super(message);
-        }
+    public NegativeCapacityException(String message) {
+        super(message);
+    }
 
-        public NegativeCapacityException(String message, Throwable cause) {
-            super(message, cause);
-        }
+    public NegativeCapacityException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }
