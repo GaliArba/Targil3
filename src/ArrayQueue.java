@@ -6,8 +6,8 @@ import java.util.Iterator;
  * @author Yuval komar, Gali arba
  * @param <E> instance of the array queue object
  */
-public class ArrayQueue<E extends Cloneable> implements Queue{
-    private Cloneable array[];
+public class ArrayQueue<E extends Cloneable> implements Queue<E>{
+    private Object array[];
 
     /**
      * the index of the object at the head of the queue where the objects coming out
@@ -31,9 +31,9 @@ public class ArrayQueue<E extends Cloneable> implements Queue{
     public ArrayQueue(int maxCap) throws NegativeCapacityException { //maxCap is the maximum capacity
         if (maxCap < 0)
             throw new NegativeCapacityException();
-        this.array = new Cloneable[maxCap]; //Initialize Array
-        this.front = 0; //the index of the object at the head of the queue where the objects coming out
-        this.rear = 0; //the index of tail of the queue where the object coming in
+        this.array = new Object[maxCap]; //Initialize Array
+        this.front = -1; //the index of the object at the head of the queue where the objects coming out
+        this.rear = -1; //the index of tail of the queue where the object coming in
         this.capacity = maxCap; //the max size of the queue
     }
 
@@ -43,10 +43,24 @@ public class ArrayQueue<E extends Cloneable> implements Queue{
      * @throws QueueOverflowException if the queue is full
      */
     @Override
-    public void enqueue(Cloneable element) throws QueueOverflowException {
-        if(front == capacity-1 || this.array == null)
+    public void enqueue(E element) throws QueueOverflowException {
+        if(capacity == this.size()) //when the queue is full
             throw new QueueOverflowException();
-        this.array[this.rear] = element;
+        else {
+            if (this.size() == 0) { //when the queue is empty
+                this.rear = 0;
+                this.front = 0;
+                this.array[front] = element;
+            }
+            if (this.size() != 0) { //when the queue isn't empty and not full
+                this.rear += 1;
+                this.array[rear] = element;
+            }
+            if (this.rear == capacity){ //if rear is in last index of the array
+                this.rear = 0;
+                this.array[this.rear] = element;
+            }
+        }
     }
 
     /**
@@ -54,11 +68,23 @@ public class ArrayQueue<E extends Cloneable> implements Queue{
      * @return the object at the head of the queue
      */
     @Override
-    public Cloneable dequeue() throws EmptyQueueException {
-        if(array[front] == null)
+    public E dequeue() throws EmptyQueueException {
+        if(front == -1 || array[front] == null) //checks if queue is empty
             throw new EmptyQueueException();
+        if(this.front != size()){ //if front index not pointing on last index of the array
+            E temp;
+            temp = (E) this.array[front];
+            this.array[front] = null;
+            this.front += 1;
+            return temp;
+        }
+         // if front index is pointing on last index of the array
+            E temp;
+            temp = (E) this.array[front];
+            this.array[front] = null;
+            this.front = 0;
+            return temp;
 
-        return null;
     }
 
     @Override
@@ -68,12 +94,15 @@ public class ArrayQueue<E extends Cloneable> implements Queue{
 
     @Override
     public int size() {
-        return 0;
+        if(array[front] == null)
+            return front;
+        return front + 1;
+
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return array[front] == null && front == 0;
     }
 
     @Override
