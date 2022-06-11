@@ -6,8 +6,8 @@ import java.util.Iterator;
  * @author Yuval komar, Gali arba
  * @param <E> instance of the array queue object
  */
-public class ArrayQueue<E> implements Queue{
-    private Object ArrayQueue[];
+public class ArrayQueue<E extends Cloneable> implements Queue{
+    private Cloneable array[];
 
     /**
      * the index of the object at the head of the queue where the objects coming out
@@ -31,7 +31,7 @@ public class ArrayQueue<E> implements Queue{
     public ArrayQueue(int maxCap) throws NegativeCapacityException { //maxCap is the maximum capacity
         if (maxCap < 0)
             throw new NegativeCapacityException();
-        this.ArrayQueue = new Object[maxCap]; //Initialize Array
+        this.array = new Cloneable[maxCap]; //Initialize Array
         this.front = 0; //the index of the object at the head of the queue where the objects coming out
         this.rear = 0; //the index of tail of the queue where the object coming in
         this.capacity = maxCap; //the max size of the queue
@@ -44,15 +44,20 @@ public class ArrayQueue<E> implements Queue{
      */
     @Override
     public void enqueue(Cloneable element) throws QueueOverflowException {
-        if(front == capacity-1 || this.ArrayQueue == null)
+        if(front == capacity-1 || this.array == null)
             throw new QueueOverflowException();
-        this.ArrayQueue[this.rear] = element;
-
-
+        this.array[this.rear] = element;
     }
 
+    /**
+     * pull an object from the head of the queue and returns it
+     * @return the object at the head of the queue
+     */
     @Override
-    public Cloneable dequeue() {
+    public Cloneable dequeue() throws EmptyQueueException {
+        if(array[front] == null)
+            throw new EmptyQueueException();
+
         return null;
     }
 
