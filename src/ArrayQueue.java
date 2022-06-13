@@ -66,21 +66,29 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>{
     /**
      * pull an object from the head of the queue and returns it
      * @return the object at the head of the queue
+
      * @throws EmptyQueueException if the queue is empty
+
      */
     @Override
     public E dequeue() throws EmptyQueueException {
         if(front == -1 || array[front] == null) //checks if queue is empty
             throw new EmptyQueueException();
+
         E temp = (E) this.array[front];
         this.array[front] = null;
         if(this.front != size()){ //if front index not pointing on last index of the array
+
             this.front += 1;
             return temp;
         }
          // if front index is pointing on last index of the array
+
+
+
         this.front = 0;
         return temp;
+
     }
 
     /**
@@ -101,8 +109,10 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>{
      */
     @Override
     public int size() {
+
         if(front == -1)
             return 0;
+
         return front + 1;
 
     }
