@@ -1,10 +1,14 @@
+
 import java.util.Date;
+
+
 
 /**
  * Task.java represent a task of student
  * @version 11/06/22
  * @author Yuval komar, Gali arba
  */
+
 public class Task extends Date implements Cloneable {
     private String Description;
     private Date dueDate;
