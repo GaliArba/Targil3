@@ -9,9 +9,14 @@ public class Task extends Date implements Cloneable {
     private String Description;
     private Date dueDate;
 
-    public Task(String description, Date dueDate){ // Constructor
-        this.Description = description;
+    public  Task(String description, Date dueDate){ // Constructor
+        this.Description = new String(description);
         this.dueDate = dueDate;
+    }
+
+    @Override
+    public String toString(){
+        return "(" + Description + ", " + dueDate + ")";
     }
 
     @Override
