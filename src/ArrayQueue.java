@@ -1,3 +1,5 @@
+//import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Iterator;
  * @param <E> instance of the array queue object
  */
 public class ArrayQueue<E extends Cloneable> implements Queue<E>{
-    private Object array[];
+    transient Object array[];
 
     /**
      * the size of the queue
@@ -124,21 +126,27 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>{
 
     /**
      * makes new cloned queue
-     * @return
+     * @return the new cloned Arrayqueue object
      */
     @Override
-    public Queue<E> clone() {
+    public ArrayQueue<E> clone() {
         try{
-
+            ArrayQueue<E> result = (ArrayQueue<E>) super.clone();
+            result.array = Arrays.copyOf(array, array.length);
+            return result;
         }
-
-        catch (){
+        catch (CloneNotSupportedException e) {
+            return null;
 
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
-    public Iterator iterator() {
-        return null;
+    public Iterator<E> iterator() {
+        return (Iterator<E>) new ArrayQueueIterator();
     }
 }
