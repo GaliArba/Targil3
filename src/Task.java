@@ -60,8 +60,7 @@ public class Task extends Date implements Cloneable {
      */
     @Override
     public int hashCode(){
-        return this.dueDate.hashCode();
-        //TODO check if it okay cause im not sure
+        return this.Description.hashCode();
     }
 
 }
