@@ -10,7 +10,7 @@ import java.util.Date;
  */
 
 public class Task extends Date implements Cloneable {
-    private String Description;
+    private String description;
     private Date dueDate;
 
     /**
@@ -19,7 +19,7 @@ public class Task extends Date implements Cloneable {
      * @param dueDate Date that describe until when you can apply the task
      */
     public  Task(String description, Date dueDate){ // Constructor
-        this.Description = new String(description);
+        this.description = new String(description);
         this.dueDate = dueDate;
     }
 
@@ -29,7 +29,7 @@ public class Task extends Date implements Cloneable {
      */
     @Override
     public String toString(){
-        return "(" + Description + ", " + dueDate + ")";
+        return "(" + description + ", " + dueDate + ")";
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Task extends Date implements Cloneable {
     public boolean equals(Object other){
         if(other instanceof Task){
             Task otherTask = (Task) other;
-            return this.Description.equals(((Task) otherTask).Description) &&
+            return this.description.equals(((Task) otherTask).description) &&
                     this.dueDate.equals(((Task) otherTask).dueDate) &&
                     this.hashCode() == otherTask.hashCode();
         }
@@ -60,7 +60,16 @@ public class Task extends Date implements Cloneable {
      */
     @Override
     public int hashCode(){
-        return this.Description.hashCode();
+        return this.description.hashCode();
+    }
+
+    /**
+     * check if a task description is equals to the current task description
+     * @param checkDescription the task that need to checked
+     * @return true if the tasks descriptions are the same
+     */
+    public boolean sameDescription(Task checkDescription){
+        return this.description.equals(checkDescription.description);
     }
 
 }

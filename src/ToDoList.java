@@ -10,21 +10,26 @@ import java.util.List;
  */
 
 public class ToDoList implements Cloneable, TaskIterable {
-    private ArrayList<Task> TaskList = new ArrayList<Task>();
+    private ArrayList<Task> TaskList;
 
     /**
      * constructor of the class
      */
-    public ToDoList() {super();} //is it okay?
+    public ToDoList() {
+        TaskList = new ArrayList<Task>();
+    }
 
     /**
-     * this method add task to the ToDoList
-     * @param task
-     * @throws TaskAlreadyExistsException
+     * this method add task to the ToDoList if there isnt already such task
+     * @param task is the task that we add to the list
+     * @throws TaskAlreadyExistsException throws if there is already such task
      */
     public void addTask(Task task) throws TaskAlreadyExistsException{
         //ToDo if task description already exist throw new TaskAlreadyExistsException
-        if((TaskList.)
+        for(int i=0;i<TaskList.size();i++){
+            if(TaskList.get(i).sameDescription(task))
+                throw new TaskAlreadyExistsException();
+        }
         TaskList.add(task); // add task to the ToDoList
     }
 
