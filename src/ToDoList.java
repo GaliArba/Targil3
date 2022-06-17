@@ -24,6 +24,7 @@ public class ToDoList implements Cloneable, TaskIterable {
      */
     public void addTask(Task task) throws TaskAlreadyExistsException{
         //ToDo if task description already exist throw new TaskAlreadyExistsException
+        if((TaskList.)
         TaskList.add(task); // add task to the ToDoList
     }
 
