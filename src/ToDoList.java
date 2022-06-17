@@ -1,5 +1,6 @@
 import java.lang.annotation.ElementType;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -8,8 +9,8 @@ import java.util.List;
  * @author Yuval komar, Gali arba
  */
 
-public class ToDoList implements Cloneable {
-    private ArrayList<Task> List = new ArrayList<Task>();
+public class ToDoList implements Cloneable, TaskIterable {
+    private ArrayList<Task> TaskList = new ArrayList<Task>();
 
     /**
      * constructor of the class
@@ -23,7 +24,8 @@ public class ToDoList implements Cloneable {
      */
     public void addTask(Task task) throws TaskAlreadyExistsException{
         //ToDo if task description already exist throw new TaskAlreadyExistsException
-        List.add(task); // add task to the ToDoList
+        if((TaskList.)
+        TaskList.add(task); // add task to the ToDoList
     }
 
 
@@ -48,7 +50,7 @@ public class ToDoList implements Cloneable {
      */
     @Override
     public boolean equals(ToDoList list){
-        //TODO writing that method
+        return this.TaskList.equals(list);
     }
 
     /**
@@ -57,6 +59,17 @@ public class ToDoList implements Cloneable {
      */
     @Override
     public int hashCode(){
-        //TODO write that class
+        int ToDoListHashCode = 0;
+        for(int i = 0; i < this.TaskList.size()-1; i++){
+            ToDoListHashCode += this.TaskList.get(i).hashCode();
+        }
+        return ToDoListHashCode;
     }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return null;
+        //TODO write that class and API
+    }
+
 }

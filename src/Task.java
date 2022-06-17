@@ -34,17 +34,24 @@ public class Task extends Date implements Cloneable {
 
     @Override
     public Task clone() {
+        //TODO write that method
         return null;
     }
 
     /**
      * this method checks if 2 tasks are equals
-     * @param task that we'd like to compare
+     * @param other that we'd like to compare
      * @return boolean value
      */
     @Override
-    public boolean equals(Task task){
-        //TODO write that
+    public boolean equals(Object other){
+        if(other instanceof Task){
+            Task otherTask = (Task) other;
+            return this.Description.equals(((Task) otherTask).Description) &&
+                    this.dueDate.equals(((Task) otherTask).dueDate) &&
+                    this.hashCode() == otherTask.hashCode();
+        }
+        return false;
     }
 
     /**
@@ -53,7 +60,7 @@ public class Task extends Date implements Cloneable {
      */
     @Override
     public int hashCode(){
-        //TODO write that method
+        return this.Description.hashCode();
     }
 
 }
