@@ -16,6 +16,8 @@ public class ArrayQueueIterator<E extends Cloneable> implements Iterator<E>{
 
     @Override
     public boolean hasNext() {
+        if(aqArray == null)
+            return false;
         return !(this.aqArray.isEmpty());
     }
 

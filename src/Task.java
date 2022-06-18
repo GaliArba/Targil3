@@ -31,7 +31,12 @@ public class Task extends Date implements Cloneable {
      */
     @Override
     public String toString(){
-        return "(" + this.description + ", " + this.dueDate.toString() + ")";
+        int month = this.dueDate.getMonth() + 1;
+        String monthString = "";
+        if(month<=9)
+            String monthString = "";
+        int year = this.dueDate.getYear()+1900;
+        return "(" + this.description + ", " + this.dueDate.getMonth() +"." +year + ")";
     }
 
     @Override
@@ -81,4 +86,28 @@ public class Task extends Date implements Cloneable {
         return this.description.equals(checkDescription.description);
     }
 
+    /**
+     * get the date of specific task
+     * @return Task's Date
+     */
+    public Date getDueDate(){
+        return this.dueDate;
+    }
+
+    /**
+     * set a new Date for task
+     * @param setDate new Date
+     */
+    public void setDueDate(Date setDate){
+        this.dueDate = setDate;
+    }
+
+
+    /**
+     * ger the description of specific task
+     * @return Task's Description
+     */
+    public String getDescription(){
+        return this.description;
+    }
 }

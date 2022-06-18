@@ -112,6 +112,8 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>,Cloneable,Itera
      */
     @Override
     public int size() {
+        if(this == null)
+            return 0;
         return this.queueSize;
     }
 
@@ -121,6 +123,8 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>,Cloneable,Itera
      */
     @Override
     public boolean isEmpty() {
+        if(this == null)
+            return true;
         return queueSize == 0;
     }
 
@@ -133,10 +137,10 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>,Cloneable,Itera
         try{
             ArrayQueue<E> result = (ArrayQueue<E>) super.clone();
             result.array = this.array.clone();
-            Class<Cloneable> eMethod = Cloneable.class;
-            Method m = eMethod.getMethod("clone");
+            Class<Object> eMethod = Object.class;
+            Method m = eMethod.getDeclaredMethod("clone");
             for(int i = 0 ; i < this.capacity;i++){
-                result.array[i] = (ArrayQueue<E>)m.invoke(result.array[i]);
+                result.array[i] = (E)m.invoke(result.array[i]);
             }
 
             return result;
