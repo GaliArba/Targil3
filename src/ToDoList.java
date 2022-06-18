@@ -1,7 +1,5 @@
-import java.lang.annotation.ElementType;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * ToDoList.java represent list of tasks
@@ -20,13 +18,16 @@ public class ToDoList implements Cloneable, TaskIterable {
     }
 
     /**
-     * this method add task to the ToDoList
-     * @param task new task that get inside the ToDoList
-     * @throws TaskAlreadyExistsException error been thrown if task description already exist
+     * this method add task to the ToDoList if there isnt already such task
+     * @param task is the task that we add to the list
+     * @throws TaskAlreadyExistsException throws if there is already such task
      */
     public void addTask(Task task) throws TaskAlreadyExistsException{
         //ToDo if task description already exist throw new TaskAlreadyExistsException
-        if((TaskList.)
+        for(int i=0;i<TaskList.size();i++){
+            if(TaskList.get(i).sameDescription(task))
+                throw new TaskAlreadyExistsException();
+        }
         TaskList.add(task); // add task to the ToDoList
     }
 

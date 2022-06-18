@@ -1,3 +1,4 @@
+import java.lang.reflect.Method;
 import java.util.Iterator;
 
 /**
@@ -6,13 +7,18 @@ import java.util.Iterator;
  * @author Yuval komar, Gali arba
  * @param <E> instance of the array queue object
  */
-public class ArrayQueue<E extends Cloneable> implements Queue<E>{
-    private Object array[];
+public class ArrayQueue<E extends Cloneable> implements Queue<E>,Cloneable,Iterable<E>{
+    protected Cloneable[] array;
+
+    /**
+     * the size of the queue
+     */
+    private int queueSize;
 
     /**
      * the index of the object at the head of the queue where the objects coming out
      */
-    private int front;
+    protected int front;
 
     /**
      * the index of tail of the queue where the object coming in
@@ -22,7 +28,8 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>{
     /**
      * the max capacity of the queue
      */
-    private int capacity;
+    private final int capacity;
+
     /**
      * creates a new queue
      * @param maxCap is the maximum capacity of the queue
@@ -31,12 +38,12 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>{
     public ArrayQueue(int maxCap) throws NegativeCapacityException { //maxCap is the maximum capacity
         if (maxCap < 0)
             throw new NegativeCapacityException();
-        this.array = new Object[maxCap]; //Initialize Array
+        this.array = new Cloneable[maxCap]; //Initialize Array
         this.front = -1; //the index of the object at the head of the queue where the objects coming out
         this.rear = -1; //the index of tail of the queue where the object coming in
         this.capacity = maxCap; //the max size of the queue
+        this.queueSize = 0;
     }
-
     /**
      * add new object to the queue
      * @param element is the new object entering the queue
@@ -51,14 +58,17 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>{
                 this.rear = 0;
                 this.front = 0;
                 this.array[front] = element;
+                queueSize++;
             }
             if (this.size() != 0) { //when the queue isn't empty and not full
                 this.rear += 1;
                 this.array[rear] = element;
+                queueSize++;
             }
-            if (this.rear == capacity){ //if rear is in last index of the array
+            if (this.rear == capacity-1){ //if rear is in last index of the array
                 this.rear = 0;
                 this.array[this.rear] = element;
+                queueSize++;
             }
         }
     }
@@ -66,29 +76,22 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>{
     /**
      * pull an object from the head of the queue and returns it
      * @return the object at the head of the queue
-
      * @throws EmptyQueueException if the queue is empty
-
      */
     @Override
     public E dequeue() throws EmptyQueueException {
         if(front == -1 || array[front] == null) //checks if queue is empty
             throw new EmptyQueueException();
-
         E temp = (E) this.array[front];
         this.array[front] = null;
+        queueSize--;
         if(this.front != size()){ //if front index not pointing on last index of the array
-
             this.front += 1;
             return temp;
         }
          // if front index is pointing on last index of the array
-
-
-
         this.front = 0;
         return temp;
-
     }
 
     /**
@@ -109,26 +112,58 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>{
      */
     @Override
     public int size() {
-
-        if(front == -1)
-            return 0;
-
-        return front + 1;
-
+        return this.queueSize;
     }
 
+    /**
+     * checks if the queue is empty
+     * @return true if the queue is empty
+     */
     @Override
     public boolean isEmpty() {
-        return array[front] == null && front == 0;
+        return queueSize == 0;
     }
 
+    /**
+     * makes new cloned queue
+     * @return the new cloned Arrayqueue object
+     */
     @Override
-    public Queue clone() {
-        return null;
+    public ArrayQueue<E> clone() {
+        try{
+            ArrayQueue<E> result = (ArrayQueue<E>) super.clone();
+            result.array = this.array.clone();
+            Class<Cloneable> eMethod = Cloneable.class;
+            Method m = eMethod.getMethod("clone");
+            for(int i = 0 ; i < this.capacity;i++){
+                result.array[i] = (ArrayQueue<E>)m.invoke(result.array[i]);
+            }
+
+            return result;
+        }
+        catch (Exception e) {
+            return null;
+
+        }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
-    public Iterator iterator() {
-        return null;
+    public Iterator<E> iterator() {
+        return (Iterator<E>) new ArrayQueueIterator(this);
     }
+
+    public int getCapacity(){
+        return this.capacity;
+    }
+    public int getFront(){
+        return this.front;
+    }
+    public int getRear(){
+        return this.rear;
+    }
+
 }

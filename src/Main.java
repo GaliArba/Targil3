@@ -130,7 +130,6 @@ public class Main {
         }
 
         System.out.println("\nTesting of part A is over!\n\n");
-*/
     }
 
     /**
