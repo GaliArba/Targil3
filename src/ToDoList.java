@@ -1,7 +1,5 @@
-import java.lang.annotation.ElementType;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * ToDoList.java represent list of tasks
