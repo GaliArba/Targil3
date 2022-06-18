@@ -1,4 +1,6 @@
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -25,17 +27,24 @@ public class Task extends Date implements Cloneable {
 
     /**
      * the method prints the task due to format
-     * @return task
+     * @return print due to format
      */
     @Override
     public String toString(){
-        return "(" + description + ", " + dueDate + ")";
+        return "(" + this.description + ", " + this.dueDate.toString() + ")";
     }
 
     @Override
     public Task clone() {
-        //TODO write that method
-        return null;
+        try {
+            Task result = (Task) super.clone();
+            result.description = new String(description);
+            result.dueDate = (Date) this.dueDate.clone();
+            return result;
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 
     /**

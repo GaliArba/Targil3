@@ -1,3 +1,4 @@
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -24,7 +25,7 @@ public class ToDoList implements Cloneable, TaskIterable {
      */
     public void addTask(Task task) throws TaskAlreadyExistsException{
         //ToDo if task description already exist throw new TaskAlreadyExistsException
-        for(int i=0;i<TaskList.size();i++){
+        for(int i = 0; i < TaskList.size(); i++){
             if(TaskList.get(i).sameDescription(task))
                 throw new TaskAlreadyExistsException();
         }
@@ -38,12 +39,34 @@ public class ToDoList implements Cloneable, TaskIterable {
      */
     @Override
     public String toString(){
-        return "[" + new ToDoList() + "]";
+        if(TaskList.size() == 0) // if list is empty
+            return "";
+                                //else prints due to format
+        String list = "[";
+        for(int i = 0; i < this.TaskList.size()-1; i++){
+            list = list + TaskList.get(i) + ", ";
+        }
+        list = list + TaskList.get(TaskList.size()-1) + "]";
+        return list;
     }
 
     @Override
     public ToDoList clone() { //override clone action
-        return null;
+        try{
+            ToDoList result = (ToDoList) super.clone();
+            result.TaskList = (ArrayList<Task>) this.TaskList.clone();
+            Class<Task> eMethod = Task.class;
+            Method m = eMethod.getMethod("clone");
+            for(int i = 0 ; i < this.TaskList.size() ;i++){
+                result.TaskList.set(i, (Task) m.invoke(result.TaskList.get(i)));
+            }
+
+            return result;
+        }
+        catch (Exception e) {
+            return null;
+
+        }
     }
 
     /**
@@ -52,8 +75,16 @@ public class ToDoList implements Cloneable, TaskIterable {
      * @return boolean value
      */
     @Override
-    public boolean equals(ToDoList list){
-        return this.TaskList.equals(list);
+    public boolean equals(Object list){
+        if(list instanceof ToDoList){
+            ToDoList otherList = (ToDoList) list;
+            for(int i = 0; i < this.TaskList.size()-1; i++){
+                if(!(this.TaskList.get(i).equals(otherList.TaskList.get(i))))
+                    return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -69,10 +100,13 @@ public class ToDoList implements Cloneable, TaskIterable {
         return ToDoListHashCode;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<Task> iterator() {
-        return null;
-        //TODO write that class and API
+        return new ToDoListIterator(this);
     }
 
 }

@@ -2,7 +2,7 @@ import java.util.Iterator;
 
 
 /**
- * ArrayQueueIterator.java implements iterable interface and
+ * ArrayQueueIterator.java implements iterable interface
  * @version 14/6/2022
  * @author Yuval komar, Gali arba
  */
