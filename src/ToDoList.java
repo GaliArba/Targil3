@@ -46,9 +46,9 @@ public class ToDoList implements Cloneable, TaskIterable {
                                 //else prints due to format
         String list = "[";
         for(int i = 0; i < this.TaskList.size()-1; i++){
-            list = list + TaskList.get(i) + ", ";
+            list = list + "(" + TaskList.get(i) + ")" + ", ";
         }
-        list = list + TaskList.get(TaskList.size()-1) + "]";
+        list = list + "(" + TaskList.get(TaskList.size()-1) + ")" + "]";
         return list;
     }
 
@@ -80,6 +80,8 @@ public class ToDoList implements Cloneable, TaskIterable {
     public boolean equals(Object list){
         if(list instanceof ToDoList){
             ToDoList otherList = (ToDoList) list;
+            if(this.TaskList.size() != otherList.TaskList.size())
+                return false;
             for(int i = 0; i < this.TaskList.size()-1; i++){
                 if(!(this.TaskList.get(i).equals(otherList.TaskList.get(i))))
                     return false;

@@ -213,7 +213,7 @@ public class Main {
 
         ToDoList l3 = new ToDoList();
 
-        System.out.println("Are lists l1 and l3 equal? " + l1.equals(l3));
+        System.out.println("Are lists l1 and l3 equal? " + l1.  equals(l3));
         l3.addTask(t2);
         System.out.println("l3: " + l3);
         System.out.println("Are lists l1 and l3 equal? " + l1.equals(l3));

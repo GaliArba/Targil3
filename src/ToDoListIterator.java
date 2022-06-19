@@ -25,15 +25,15 @@ public class ToDoListIterator implements Iterator<Task> {
     public boolean hasNext() {
        if(scanType == null)
        {
-           return !(orderList.getTaskList().size()-1 <= index);
+           return !(orderList.getTaskList().size()-1 < index);
        }
-       return !(orderList.getTaskList().size()-1 <= index) &&
+       return !(orderList.getTaskList().size()-1 < index) &&
                orderList.getTaskList().get(index).getDueDate().before(scanType);
     }
 
     @Override
     public Task next() {
             index++;
-            return orderList.getTaskList().get(index);
+            return orderList.getTaskList().get(index-1);
     }
 }

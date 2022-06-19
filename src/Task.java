@@ -31,12 +31,16 @@ public class Task extends Date implements Cloneable {
      */
     @Override
     public String toString(){
+        int day = this.dueDate.getDate();
+        String dayString = "" + this.dueDate.getDate();
+        if(day<=9)
+            dayString = "0" + dayString;
         int month = this.dueDate.getMonth() + 1;
-        String monthString = "";
+        String monthString = "" + month;
         if(month<=9)
-            String monthString = "";
+            monthString = "0" + monthString;
         int year = this.dueDate.getYear()+1900;
-        return "(" + this.description + ", " + this.dueDate.getMonth() +"." +year + ")";
+        return  this.description + ", " + day + "." + monthString +"." +year;
     }
 
     @Override
