@@ -34,7 +34,7 @@ class MyCloneable implements Cloneable {
 public class Main {
     public static void main(String[] args) {
         testPartA();
-        //testPartB();
+        testPartB();
     }
 
     /**
@@ -49,8 +49,6 @@ public class Main {
 
         Queue<MyCloneable> q1 = new ArrayQueue<>(5);
         ArrayQueue<MyCloneable> q2 = (ArrayQueue<MyCloneable>) q1;
-
-
 
         try {
             q1.peek();
@@ -68,13 +66,7 @@ public class Main {
         iterateQueue(q1, "q1");
         MyCloneable c1 = new MyCloneable(1);
         q1.enqueue(c1);
-
-
-
         iterateQueue(q1, "q1");
-
-
-
         System.out.println("Peek: " + q1.peek());
         System.out.println("Deque: " + q1.dequeue());
         System.out.println();
@@ -130,6 +122,7 @@ public class Main {
         }
 
         System.out.println("\nTesting of part A is over!\n\n");
+
     }
 
     /**
@@ -151,9 +144,6 @@ public class Main {
     /**
      * Tests for part B.
      */
-
-
-
     private static void testPartB() {
         ToDoList l1 = new ToDoList();
         for (Task t : l1) {
@@ -223,7 +213,7 @@ public class Main {
 
         ToDoList l3 = new ToDoList();
 
-        System.out.println("Are lists l1 and l3 equal? " + l1.equals(l3));
+        System.out.println("Are lists l1 and l3 equal? " + l1.  equals(l3));
         l3.addTask(t2);
         System.out.println("l3: " + l3);
         System.out.println("Are lists l1 and l3 equal? " + l1.equals(l3));
@@ -251,11 +241,9 @@ public class Main {
         System.out.println("\nTesting of part B is over!");
     }
 
-
     /**
      * Checks all of the scan types for a given ToDoList using different dates.
      */
-
     private static void checkScans(ToDoList tdl, Date[] dates) {
         System.out.println("Starts scanning...");
         for (Task t : tdl) {
@@ -278,5 +266,4 @@ public class Main {
 
         System.out.println("Done scanning");
     }
-
 }

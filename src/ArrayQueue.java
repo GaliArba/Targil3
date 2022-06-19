@@ -1,3 +1,4 @@
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 
@@ -60,12 +61,12 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>,Cloneable,Itera
                 this.array[front] = element;
                 queueSize++;
             }
-            if (this.size() != 0) { //when the queue isn't empty and not full
+            else if (this.size() != 0) { //when the queue isn't empty and not full
                 this.rear += 1;
                 this.array[rear] = element;
                 queueSize++;
             }
-            if (this.rear == capacity-1){ //if rear is in last index of the array
+            else if (this.rear == capacity-1){ //if rear is in last index of the array
                 this.rear = 0;
                 this.array[this.rear] = element;
                 queueSize++;
@@ -85,7 +86,7 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>,Cloneable,Itera
         E temp = (E) this.array[front];
         this.array[front] = null;
         queueSize--;
-        if(this.front != size()){ //if front index not pointing on last index of the array
+        if(this.front != this.capacity-1){ //if front index not pointing on last index of the array
             this.front += 1;
             return temp;
         }
@@ -131,19 +132,23 @@ public class ArrayQueue<E extends Cloneable> implements Queue<E>,Cloneable,Itera
     @Override
     public ArrayQueue<E> clone() {
         try{
-            ArrayQueue<E> result = (ArrayQueue<E>) super.clone();
-            result.array = this.array.clone();
-            Class<Cloneable> eMethod = Cloneable.class;
-            Method m = eMethod.getMethod("clone");
+            ArrayQueue<E> result = (ArrayQueue<E>)super.clone();
+            result.array = array.clone();
             for(int i = 0 ; i < this.capacity;i++){
-                result.array[i] = (ArrayQueue<E>)m.invoke(result.array[i]);
+                try {
+                    if (this.array[i] != null) {
+                        Class eMethod = this.array[i].getClass();
+                        Method m = eMethod.getMethod("clone");
+                        result.array[i] = (E) m.invoke(result.array[i]);
+                    }
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
+                    return null;
+                }
             }
-
             return result;
         }
-        catch (Exception e) {
+        catch (CloneNotSupportedException e) {
             return null;
-
         }
     }
 

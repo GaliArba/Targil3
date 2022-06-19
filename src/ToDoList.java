@@ -1,6 +1,5 @@
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * ToDoList.java represent list of tasks
@@ -11,11 +10,14 @@ import java.util.Iterator;
 public class ToDoList implements Cloneable, TaskIterable {
     private ArrayList<Task> TaskList;
 
+    private Date scanType;
+
     /**
      * constructor of the class
      */
     public ToDoList() {
         TaskList = new ArrayList<Task>();
+        scanType = null;
     }
 
     /**
@@ -44,9 +46,9 @@ public class ToDoList implements Cloneable, TaskIterable {
                                 //else prints due to format
         String list = "[";
         for(int i = 0; i < this.TaskList.size()-1; i++){
-            list = list + TaskList.get(i) + ", ";
+            list = list + "(" + TaskList.get(i) + ")" + ", ";
         }
-        list = list + TaskList.get(TaskList.size()-1) + "]";
+        list = list + "(" + TaskList.get(TaskList.size()-1) + ")" + "]";
         return list;
     }
 
@@ -78,6 +80,8 @@ public class ToDoList implements Cloneable, TaskIterable {
     public boolean equals(Object list){
         if(list instanceof ToDoList){
             ToDoList otherList = (ToDoList) list;
+            if(this.TaskList.size() != otherList.TaskList.size())
+                return false;
             for(int i = 0; i < this.TaskList.size()-1; i++){
                 if(!(this.TaskList.get(i).equals(otherList.TaskList.get(i))))
                     return false;
@@ -106,7 +110,41 @@ public class ToDoList implements Cloneable, TaskIterable {
      */
     @Override
     public Iterator<Task> iterator() {
-        return new ToDoListIterator(this);
+        return new ToDoListIterator(this,scanType);
     }
 
+    /**
+     * this method get a date to filter a scanning on the list
+     * @param dueDate the date that all task need to be before the current date
+     */
+    public void setScanningDueDate(Date dueDate){
+        if(dueDate == null)
+            return;
+        this.scanType = dueDate;
+    }
+
+    /**
+     * checks if the list is empty
+     * @return true if the list is empty
+     */
+    public boolean isEmpty(){
+        return this.TaskList.isEmpty();
+    }
+
+    /**
+     * ordering the list by date and by alphabetic order for the equals dates
+     * @return ordered list of tasks
+     */
+    public ToDoList orderByDate(){
+        Comparator<Task> taskDateComparator
+                = Comparator.comparing(Task::getDueDate).thenComparing(Task::getDescription);
+
+        Collections.sort(this.TaskList,taskDateComparator);
+
+        return this;
+    }
+
+    public ArrayList<Task> getTaskList(){
+        return TaskList;
+    }
 }

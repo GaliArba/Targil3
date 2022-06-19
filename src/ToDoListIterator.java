@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -8,22 +8,32 @@ import java.util.Iterator;
  */
 
 public class ToDoListIterator implements Iterator<Task> {
-    private ToDoList taskList;
+    private ToDoList orderList;
+    private Date scanType;
+    private int index;
+
 
     //Constructor
-    public ToDoListIterator(ToDoList list){
-        this.taskList = list.clone();
+    public ToDoListIterator(ToDoList currentList, Date scanType){
+        this.orderList = currentList.clone();
+        this.scanType = scanType;
+        this.orderList.orderByDate();
+        this.index = 0;
     }
 
     @Override
     public boolean hasNext() {
-        return false;
-        //TODO write that method
+       if(scanType == null)
+       {
+           return !(orderList.getTaskList().size()-1 < index);
+       }
+       return !(orderList.getTaskList().size()-1 < index) &&
+               orderList.getTaskList().get(index).getDueDate().before(scanType);
     }
 
     @Override
     public Task next() {
-        //TODO write that method
-        return null;
+            index++;
+            return orderList.getTaskList().get(index-1);
     }
 }
