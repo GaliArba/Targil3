@@ -82,12 +82,11 @@ public class ToDoList implements Cloneable, TaskIterable {
             ToDoList otherList = (ToDoList) list;
             if(this.TaskList.size() != otherList.TaskList.size())
                 return false;
-            boolean check = true;
             for(int i = 0; i < this.TaskList.size()-1; i++){
                 if(!(this.TaskList.contains(otherList.TaskList.get(i))))
-                    check =false;
+                    return false;
             }
-            return check;
+            return true;
         }
         return false;
     }
