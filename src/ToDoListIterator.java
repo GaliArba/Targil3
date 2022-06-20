@@ -11,7 +11,6 @@ public class ToDoListIterator implements Iterator<Task> {
     private ToDoList orderList;
     private Date scanType;
     private int index;
-    private int nextIndex;
 
 
     //Constructor
