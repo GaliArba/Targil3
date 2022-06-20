@@ -11,6 +11,7 @@ public class ToDoListIterator implements Iterator<Task> {
     private ToDoList orderList;
     private Date scanType;
     private int index;
+    private int nextIndex;
 
 
     //Constructor
@@ -19,21 +20,27 @@ public class ToDoListIterator implements Iterator<Task> {
         this.scanType = scanType;
         this.orderList.orderByDate();
         this.index = 0;
+        this.nextIndex = 0;
     }
 
     @Override
     public boolean hasNext() {
        if(scanType == null)
        {
-           return !(orderList.getTaskList().size()-1 < index);
+           return !(orderList.getTaskList().size()-1 <= index);
        }
-       return !(orderList.getTaskList().size()-1 < index) &&
-               orderList.getTaskList().get(index).getDueDate().before(scanType);
+       return !(orderList.getTaskList().size()-1 <= index) &&
+               (orderList.getTaskList().get(index).getDueDate().before(scanType));
     }
 
     @Override
     public Task next() {
-            index++;
-            return orderList.getTaskList().get(index-1);
+        if(nextIndex == 0) {
+            nextIndex++;
+            return orderList.getTaskList().get(index);
+        }
+        index = nextIndex;
+        nextIndex++;
+        return orderList.getTaskList().get(index);
     }
 }
